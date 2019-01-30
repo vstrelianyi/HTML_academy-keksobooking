@@ -100,13 +100,12 @@
 
   /**
     * Создает массив объявлений
-    * @param {Array} targetArray - массив, в который нужно записать объекты
-    * @param {number} objectsAmount - Количество нужных объявлений
-    * @param {Array} arrays - масивы с параметрами
+    * @param {number} objectsCount - Количество нужных объектов
     * @return {Array}
   */
-  var generateAds = function( targetArray, objectsAmount){
-    for( var i = 0; i < objectsAmount; i++){
+  var generateAds = function( objectsCount ){
+    var targetArray = [];
+    for( var i = 0; i < objectsCount; i++){
 
       targetArray[i]= {
         author: {
@@ -131,10 +130,12 @@
         }
       };
     }
+    return targetArray;
 
   };
 
-  window.ads = [];
-  generateAds( window.ads, OFFERS_COUNT);
+  window.ads = {
+    generateAds : generateAds
+  };
 
 })();
