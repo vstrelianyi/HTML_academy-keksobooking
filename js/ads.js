@@ -31,11 +31,11 @@
     [100,200],
     [300,350],
     [500,200],
-    [600,200],
-    [250,200],
-    [400,200],
+    [600,300],
+    [850,400],
+    [700,600],
     [250,250],
-    [100,400]
+    [850,400]
   ];
 
   var ALL_PRICES = [];
@@ -108,6 +108,7 @@
     for( var i = 0; i < objectsCount; i++){
 
       targetArray[i]= {
+        id : i,
         author: {
           avatar: window.utils.getAvatarUrl(i + 1)
         },

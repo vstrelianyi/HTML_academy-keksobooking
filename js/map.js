@@ -4,36 +4,37 @@
   var adsArray = window.ads.generateAds( 8 );
   var CURRENT_AD = adsArray[0];
 
-  //
+  // ------------------------
   // PINS
-  //
+  // ------------------------
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
   var pinImgElem = pinTemplate.querySelector('img');
 
-  /** pin constants */
+  /** Pin constants */
   var PIN_HEIGHT = 18;
   var PIN_OFFSET_X = pinImgElem.getAttribute('width') / 2;
   var PIN_OFFSET_Y = parseFloat(pinImgElem.getAttribute('height')) + PIN_HEIGHT;
 
   /**
-  * create pin elements
+  * Create pin elements
     * @param {Object} coordinates
     * @param {string} avatar
     * @return {HTMLElement}
   */
-  var createPinElem = function (coordinates, avatar) {
+  var createPinElem = function (coordinates, avatar, id) {
     var pinElem = pinTemplate.cloneNode(true);
     pinElem.querySelector('img').src = avatar;
 
     pinElem.style.left = coordinates.x - PIN_OFFSET_X + 'px';
     pinElem.style.top = coordinates.y - PIN_OFFSET_Y + 'px';
     pinElem.classList.add('map__pin');
+    pinElem.setAttribute('data-id', id);
 
     return pinElem;
   };
 
   /**
-  * render pins
+  * Render pins
     * @param {Array} ads
     * @return {DocumentFragment}
   */
@@ -41,45 +42,45 @@
     var pinFragment = document.createDocumentFragment();
 
     ads.forEach(function (ad) {
-      pinFragment.appendChild(createPinElem(ad.location, ad.author.avatar));
+      pinFragment.appendChild(createPinElem(ad.location, ad.author.avatar, ad.id));
     });
     return pinFragment;
   };
 
-  //
-  // FEATURES
-  //
+  // ------------------------
+  // POPUP
+  // ------------------------
 
   /**
-    * Готовит фрагмент фичи
-    * @param {string} feature
+    * Create popup
+    * @param {string} popup
     * @return {HTMLElement}
   */
-  var createFeaturesElem = function (feature) {
-    var featureElem = document.createElement('li');
-    featureElem.classList.add('feature', 'feature--' + feature);
+  var createPopupElem = function (popup) {
+    var popupElem = document.createElement('li');
+    popupElem.classList.add('feature', 'feature--' + popup);
 
-    return featureElem;
+    return popupElem;
   };
 
   /**
-    * Рендерит фрагмент фичи
-    * @param {Array} featuresArray
+    * Render popup
+    * @param {Array} popupArray
     * @return {DocumentFragment}
   */
-  var renderFeaturesElem = function (featuresArray) {
-    var featuresFragment = document.createDocumentFragment();
+  var renderPopupElem = function (popupArray) {
+    var popupFragment = document.createDocumentFragment();
 
-    featuresArray.forEach(function (feature) {
-      featuresFragment.appendChild(createFeaturesElem(feature));
+    popupArray.forEach(function (popup) {
+      popupFragment.appendChild(createPopupElem(popup));
     });
 
-    return featuresFragment;
+    return popupFragment;
   };
 
-  //
+  // ------------------------
   // ADS
-  //
+  // ------------------------
 
   /**
     * Render ad
@@ -101,9 +102,9 @@
     return adElem;
   };
 
-  //
+  // ------------------------
   // MAP
-  //
+  // ------------------------
 
   /**
     * Render map with pins and ads
@@ -111,18 +112,19 @@
   var renderMap = function(){
     var mapElem = document.querySelector('.map');
     var mapPinsElem = mapElem.querySelector('.map__pins');
-    var mapFiltersElem = document.querySelector('.map__filters-container');
 
+    // remove fade from map
     mapElem.classList.remove('map--faded');
 
-    var fragment = document.createDocumentFragment();
-
-    var addElem = renderAd(CURRENT_AD);
-
-    addElem.querySelector('.popup__features').appendChild(renderFeaturesElem(CURRENT_AD.offer.features));
+    // render pins to map
     mapPinsElem.appendChild(renderPins(adsArray));
+
+    // render popup to map
+    var addElem = renderAd(CURRENT_AD);
+    addElem.querySelector('.popup__features').appendChild( renderPopupElem(CURRENT_AD.offer.features) );
+    var fragment = document.createDocumentFragment();
     fragment.appendChild(addElem);
-    mapFiltersElem.appendChild(fragment);
+    mapElem.appendChild(fragment);
   };
   renderMap();
 
