@@ -52,30 +52,30 @@
   // ------------------------
 
   /**
-    * Create popup
-    * @param {string} popup
+    * Create feature element
+    * @param {string} feature
     * @return {HTMLElement}
   */
-  var createPopupElem = function (popup) {
-    var popupElem = document.createElement('li');
-    popupElem.classList.add('feature', 'feature--' + popup);
+  var createFeatureElem = function (feature) {
+    var featureElem = document.createElement('li');
+    featureElem.classList.add('feature', 'feature--' + feature);
 
-    return popupElem;
+    return featureElem;
   };
 
   /**
     * Render popup
-    * @param {Array} popupArray
+    * @param {Array} featuresArray
     * @return {DocumentFragment}
   */
-  var renderPopupElem = function (popupArray) {
-    var popupFragment = document.createDocumentFragment();
+  var renderFeaturesElem = function (featuresArray) {
+    var featuresFragment = document.createDocumentFragment();
 
-    popupArray.forEach(function (popup) {
-      popupFragment.appendChild(createPopupElem(popup));
+    featuresArray.forEach(function (feature) {
+      featuresFragment.appendChild( createFeatureElem(feature) );
     });
 
-    return popupFragment;
+    return featuresFragment;
   };
 
   // ------------------------
@@ -97,7 +97,10 @@
     adElem.querySelector('h4 + p + p').textContent = 'Заезд после ' + currenAd.offer.checkin + ',' + ' выезд до ' + currenAd.offer.checkout;
     adElem.querySelector('.popup__avatar').src = currenAd.author.avatar;
     adElem.querySelector('ul + p').textContent = '';
-    adElem.querySelector('.popup__features').innerHTML = '';
+    // adElem.querySelector('.popup__features').innerHTML = 'popup__features';
+    adElem.querySelector('.popup__pictures').innerHTML = 'popup__pictures';
+
+    adElem.querySelector('.popup__features').appendChild( renderFeaturesElem(CURRENT_AD.offer.features) );
 
     return adElem;
   };
@@ -112,6 +115,7 @@
   var renderMap = function(){
     var mapElem = document.querySelector('.map');
     var mapPinsElem = mapElem.querySelector('.map__pins');
+    var mapFilterElem = mapElem.querySelector('.map__filters-container');
 
     // remove fade from map
     mapElem.classList.remove('map--faded');
@@ -120,11 +124,14 @@
     mapPinsElem.appendChild(renderPins(adsArray));
 
     // render popup to map
-    var addElem = renderAd(CURRENT_AD);
-    addElem.querySelector('.popup__features').appendChild( renderPopupElem(CURRENT_AD.offer.features) );
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(addElem);
-    mapElem.appendChild(fragment);
+    var adElem = renderAd(CURRENT_AD);
+    // adElem.querySelector('.popup__features').appendChild( renderFeaturesElem(CURRENT_AD.offer.features) );
+
+    var popupFragment = document.createDocumentFragment();
+    popupFragment.appendChild(adElem);
+
+    mapElem.appendChild(popupFragment);
+    // mapFilterElem.appendChild(popupFragment);
   };
   renderMap();
 
