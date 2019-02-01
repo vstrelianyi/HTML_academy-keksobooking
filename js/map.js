@@ -150,7 +150,7 @@
     var mapFilterElem = mapElem.querySelector('.map__filters-container');
 
     // remove fade from map
-    mapElem.classList.remove('map--faded');
+    // mapElem.classList.remove('map--faded');
 
     // render pins to map
     mapPinsElem.appendChild(renderPins(adsArray));
