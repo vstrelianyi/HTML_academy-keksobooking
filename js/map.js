@@ -1,6 +1,7 @@
 (function(){
   'use strict';
 
+  // generate ads array
   var adsArray = window.ads.generateAds( 8 );
   var CURRENT_AD = adsArray[0];
 
@@ -69,6 +70,7 @@
     * @return {DocumentFragment}
   */
   var renderFeaturesElem = function (featuresArray) {
+
     var featuresFragment = document.createDocumentFragment();
 
     featuresArray.forEach(function (feature) {
@@ -77,6 +79,35 @@
 
     return featuresFragment;
   };
+
+  /**
+    * Create photo element
+    * @param {string} photo
+    * @return {HTMLElement}
+  */
+  var createPhotoElem = function(photo){
+    var photoElem = document.createElement('li');
+    var photoImgElem = document.createElement('img');
+    photoImgElem.src  = photo;
+    photoElem.appendChild(photoImgElem);
+
+    return photoElem;
+  };
+
+  /**
+    * Render photos
+    * @param {Array} photosArray
+    * @return {DocumentFragment}
+  */
+ var renderPhotos = function(photosArray){
+    var photosFragment = document.createDocumentFragment();
+
+    photosArray.forEach( function( photo ){
+      photosFragment.appendChild( createPhotoElem(photo) );
+    });
+
+    return photosFragment;
+ };
 
   // ------------------------
   // ADS
@@ -89,6 +120,7 @@
   */
   var renderAd = function (currenAd) {
     var adElem = document.querySelector('template').content.querySelector('article.map__card').cloneNode(true);
+
     adElem.querySelector('h3').textContent = currenAd.offer.title;
     adElem.querySelector('p small').textContent = currenAd.offer.address;
     adElem.querySelector('.popup__price').textContent = currenAd.offer.price + '₽/ночь';
@@ -97,10 +129,10 @@
     adElem.querySelector('h4 + p + p').textContent = 'Заезд после ' + currenAd.offer.checkin + ',' + ' выезд до ' + currenAd.offer.checkout;
     adElem.querySelector('.popup__avatar').src = currenAd.author.avatar;
     adElem.querySelector('ul + p').textContent = '';
-    // adElem.querySelector('.popup__features').innerHTML = 'popup__features';
-    adElem.querySelector('.popup__pictures').innerHTML = 'popup__pictures';
-
+    adElem.querySelector('.popup__features').innerHTML = '';
     adElem.querySelector('.popup__features').appendChild( renderFeaturesElem(CURRENT_AD.offer.features) );
+    adElem.querySelector('.popup__pictures').innerHTML = '';
+    adElem.querySelector('.popup__pictures').appendChild( renderPhotos(CURRENT_AD.offer.photos) );
 
     return adElem;
   };
@@ -123,15 +155,11 @@
     // render pins to map
     mapPinsElem.appendChild(renderPins(adsArray));
 
-    // render popup to map
+    // create ad element
     var adElem = renderAd(CURRENT_AD);
-    // adElem.querySelector('.popup__features').appendChild( renderFeaturesElem(CURRENT_AD.offer.features) );
 
-    var popupFragment = document.createDocumentFragment();
-    popupFragment.appendChild(adElem);
-
-    mapElem.appendChild(popupFragment);
-    // mapFilterElem.appendChild(popupFragment);
+    // render popup to map
+    mapElem.insertBefore(adElem, mapFilterElem);
   };
   renderMap();
 
