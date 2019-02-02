@@ -135,8 +135,8 @@
 
   };
 
-  window.ads = {
-    generateAds : generateAds
+  window.mock_data = {
+    ads : generateAds(8)
   };
 
 })();

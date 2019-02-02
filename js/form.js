@@ -1,9 +1,21 @@
 (function(){
   'use strict';
 
-  var form = document.querySelector('.notice__form');
+  var formElem = document.querySelector('.notice__form');
 
-  window.utils.toggleDisabledOnFormFieldsets( form , true);
+  var toggleDisabledOnFormFieldsets = function( form, isDisabled){
+    var formElems = Array.from( form.elements );
+
+    formElems.forEach( function( el ){
+      el.disabled = isDisabled;
+    });
+  };
+
+  toggleDisabledOnFormFieldsets( formElem , true);
+
+  window.form = {
+    toggleDisabledOnFormFieldsets: toggleDisabledOnFormFieldsets
+  };
 
   // form.querySelectorAll('fieldset').forEach(function( el ){
   //   el.setAttribute('disabled', true);
