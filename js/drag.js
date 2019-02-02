@@ -36,21 +36,22 @@
       };
 
       // control bounds of the main pin
-      if( mapPinMainElem.offsetTop <= bounds.yMin ){
-        mapPinMainElem.style.top = bounds.yMin + 1 + 'px';
-      }
-      if( mapPinMainElem.offsetTop >= bounds.yMax ){
-        mapPinMainElem.style.top = bounds.yMax + 1 + 'px';
-      }
       if( mapPinMainElem.offsetLeft <= bounds.xMin ){
         mapPinMainElem.style.left = bounds.xMin - 1 + 'px';
       }
       if( mapPinMainElem.offsetLeft >= bounds.xMax ){
         mapPinMainElem.style.left = bounds.xMax - 1  + 'px';
       }
+      if( mapPinMainElem.offsetTop <= bounds.yMin ){
+        mapPinMainElem.style.top = bounds.yMin + 1 + 'px';
+      }
+      if( mapPinMainElem.offsetTop >= bounds.yMax ){
+        mapPinMainElem.style.top = bounds.yMax + 1 + 'px';
+      }
       else{
-        mapPinMainElem.style.top = ( mapPinMainElem.offsetTop - shift.y ) + 'px';
         mapPinMainElem.style.left = ( mapPinMainElem.offsetLeft - shift.x ) + 'px';
+        mapPinMainElem.style.top = ( mapPinMainElem.offsetTop - shift.y ) + 'px';
+        window.form.updateAdress( mapPinMainElem.offsetLeft - shift.x, mapPinMainElem.offsetTop - shift.y );
       }
 
     };

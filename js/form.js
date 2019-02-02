@@ -13,7 +13,13 @@
 
   toggleDisabledOnFormFieldsets( formElem , true);
 
+  var updateAdress = function( x , y){
+    var addressInputElem = document.querySelector('[name="address"]');
+    addressInputElem.value = 'x: ' + x +', y: ' + y;
+  };
+
   window.form = {
+    updateAdress: updateAdress,
     toggleDisabledOnFormFieldsets: toggleDisabledOnFormFieldsets
   };
 
