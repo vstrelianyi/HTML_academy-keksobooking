@@ -86,6 +86,15 @@
   };
 
   /**
+  * Remove ads
+  **/
+  var removeAds = function(){
+    document.querySelectorAll( '.map__card').forEach(function(el){
+      el.remove();
+    });
+  };
+
+  /**
     * Render ads
     * @param {Array} adIdArray
   **/
@@ -105,6 +114,7 @@
   };
 
   window.ads = {
+    removeAds: removeAds,
     renderAds: renderAds
   };
 

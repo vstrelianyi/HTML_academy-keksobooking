@@ -58,6 +58,7 @@
   var onUserPinClick = function( event ){
     var id = this.getAttribute( 'data-id' );
     if( id ){
+      window.ads.removeAds();
       window.ads.renderAds( id );
     }
   };
