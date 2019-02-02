@@ -3,8 +3,10 @@
 
   var form = document.querySelector('.notice__form');
 
-  form.querySelectorAll('fieldset').forEach(function( el ){
-    el.setAttribute('disabled', true);
-  });
+  window.utils.toggleDisabledOnFormFieldsets( form , true);
+
+  // form.querySelectorAll('fieldset').forEach(function( el ){
+  //   el.setAttribute('disabled', true);
+  // });
 
 })();

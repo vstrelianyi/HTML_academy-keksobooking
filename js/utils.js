@@ -44,10 +44,19 @@
     return 'img/avatars/user' + addZero(avatar) + '.png';
   };
 
+  var toggleDisabledOnFormFieldsets = function( form, isDisabled){
+    var formElems = Array.from( form.elements );
+
+    formElems.forEach( function( el ){
+      el.disabled = isDisabled;
+    });
+  };
+
   window.utils = {
     getRandomNum: getRandomNum,
     getRandomElements: getRandomElements,
-    getAvatarUrl: getAvatarUrl
+    getAvatarUrl: getAvatarUrl,
+    toggleDisabledOnFormFieldsets: toggleDisabledOnFormFieldsets
   };
 
 })();
