@@ -47,15 +47,15 @@
   var addPinEventListeners = function(){
     var mapPinElems = document.querySelectorAll('.map__pin');
     mapPinElems.forEach( function(el){
-      el.addEventListener( 'click', showAd );
+      el.addEventListener( 'click', onUserPinClick );
     });
   };
 
   /**
-   * Show advertisement by id which is taken from click event
-   * @param {clickdEvent} event
-   */
-  var showAd = function( event ){
+    * Show advertisement by id which is taken from click event
+    * @param {clickdEvent} event
+  */
+  var onUserPinClick = function( event ){
     var id = this.getAttribute( 'data-id' );
     if( id ){
       window.ads.renderAds( id );
