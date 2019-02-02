@@ -49,9 +49,8 @@
         mapPinMainElem.style.left = bounds.xMax - 1  + 'px';
       }
       else{
-
-      mapPinMainElem.style.top = ( mapPinMainElem.offsetTop - shift.y ) + 'px';
-      mapPinMainElem.style.left = ( mapPinMainElem.offsetLeft - shift.x ) + 'px';
+        mapPinMainElem.style.top = ( mapPinMainElem.offsetTop - shift.y ) + 'px';
+        mapPinMainElem.style.left = ( mapPinMainElem.offsetLeft - shift.x ) + 'px';
       }
 
     };

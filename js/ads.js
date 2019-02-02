@@ -80,6 +80,11 @@
     return adElem;
   };
 
+  var onUserPopUpCloseClick = function(){
+    var removeNode = this.parentNode;
+    removeNode.parentNode.removeChild(removeNode);
+  };
+
   /**
     * Render ads
     * @param {Array} adIdArray
@@ -94,6 +99,9 @@
 
     // render popup to map
     mapElem.insertBefore(adElem, mapFilterElem);
+
+    var popUpCloseElem = document.querySelector('.popup__close');
+    popUpCloseElem.addEventListener( 'click', onUserPopUpCloseClick );
   };
 
   window.ads = {
