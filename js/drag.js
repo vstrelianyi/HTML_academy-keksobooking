@@ -37,16 +37,16 @@
 
       // control bounds of the main pin
       if( mapPinMainElem.offsetLeft <= bounds.xMin ){
-        mapPinMainElem.style.left = bounds.xMin - 1 + 'px';
+        mapPinMainElem.style.left = bounds.xMin + 5 + 'px';
       }
       if( mapPinMainElem.offsetLeft >= bounds.xMax ){
-        mapPinMainElem.style.left = bounds.xMax - 1  + 'px';
+        mapPinMainElem.style.left = bounds.xMax - 5  + 'px';
       }
       if( mapPinMainElem.offsetTop <= bounds.yMin ){
-        mapPinMainElem.style.top = bounds.yMin + 1 + 'px';
+        mapPinMainElem.style.top = bounds.yMin + 5 + 'px';
       }
       if( mapPinMainElem.offsetTop >= bounds.yMax ){
-        mapPinMainElem.style.top = bounds.yMax + 1 + 'px';
+        mapPinMainElem.style.top = bounds.yMax - 5 + 'px';
       }
       else{
         mapPinMainElem.style.left = ( mapPinMainElem.offsetLeft - shift.x ) + 'px';
