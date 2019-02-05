@@ -1,5 +1,7 @@
 (function(){
   'use strict';
+
+  // exports
   window.constants = {
 
     /** numerator адресов сервера */

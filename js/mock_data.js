@@ -135,6 +135,7 @@
 
   };
 
+  // exports
   window.mock_data = {
     ads : generateAds(8)
   };

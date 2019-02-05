@@ -4,6 +4,33 @@
   var mapElem = document.querySelector('.map');
   var mapPinMainElem = mapElem.querySelector( '.map__pin--main' );
 
+  var overlayElem = mapElem.querySelector('.map__pinsoverlay');
+
+  /**
+    * Константы размеров пользовательского пина
+  */
+  var NEEDLE_HEIGHT = 22;
+  var USER_PIN_NEEDLE_POSITION = mapPinMainElem.offsetWidth / 2;
+  var USER_PIN_HEIGHT = mapPinMainElem.offsetHeight + NEEDLE_HEIGHT;
+
+  /**
+    * Pin drag limits
+  */
+  var PIN_LIMITS = {
+    y: {
+      top: 100,
+      /** Нижний предел рассчитывается через
+       *  высоту отца - высоту таскаемого элемента - 500 */
+      bottom: overlayElem.offsetHeight - mapPinMainElem.offsetHeight - 500
+    }
+  };
+
+  /** server data */
+  var initialAds;
+
+  /** ads filtered by user */
+  var filteredAds;
+
   mapPinMainElem.addEventListener('mousedown', function (downEvt) {
     downEvt.preventDefault();
 
@@ -51,9 +78,8 @@
       else{
         mapPinMainElem.style.left = ( mapPinMainElem.offsetLeft - shift.x ) + 'px';
         mapPinMainElem.style.top = ( mapPinMainElem.offsetTop - shift.y ) + 'px';
-        window.form.updateAdress( mapPinMainElem.offsetLeft - shift.x, mapPinMainElem.offsetTop - shift.y );
+        window.form.setAddressCoords();
       }
-
     };
 
     var onMouseUp = function (upEvt) {
@@ -75,5 +101,7 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  // exports
 
 })();

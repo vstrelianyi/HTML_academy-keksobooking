@@ -61,21 +61,26 @@
     * @param {Object} currenAd
     * @return {HTMLElement}
   */
-  var createAdElem = function (currenAd) {
+  var createAdElem = function (currentAd) {
     var adElem = document.querySelector('template').content.querySelector('article.map__card').cloneNode(true);
 
-    adElem.querySelector('h3').textContent = currenAd.offer.title;
-    adElem.querySelector('p small').textContent = currenAd.offer.address;
-    adElem.querySelector('.popup__price').textContent = currenAd.offer.price + '₽/ночь';
-    adElem.querySelector('h4').textContent = currenAd.offer.type;
-    adElem.querySelector('h4 + p').textContent = currenAd.offer.rooms + ' комнаты для ' + currenAd.offer.guests + ' гостей';
-    adElem.querySelector('h4 + p + p').textContent = 'Заезд после ' + currenAd.offer.checkin + ',' + ' выезд до ' + currenAd.offer.checkout;
-    adElem.querySelector('.popup__avatar').src = currenAd.author.avatar;
+    adElem.setAttribute( 'data-ad-id', currentAd.id);
+
+    adElem.querySelector('h3').textContent = currentAd.offer.title;
+    adElem.querySelector('p small').textContent = currentAd.offer.address;
+    adElem.querySelector('.popup__price').textContent = currentAd.offer.price + '₽/ночь';
+    adElem.querySelector('h4').textContent = currentAd.offer.type;
+    adElem.querySelector('h4 + p').textContent = currentAd.offer.rooms + ' комнаты для ' + currentAd.offer.guests + ' гостей';
+    adElem.querySelector('h4 + p + p').textContent = 'Заезд после ' + currentAd.offer.checkin + ',' + ' выезд до ' + currentAd.offer.checkout;
+    adElem.querySelector('.popup__avatar').src = currentAd.author.avatar;
     adElem.querySelector('ul + p').textContent = '';
     adElem.querySelector('.popup__features').innerHTML = '';
-    adElem.querySelector('.popup__features').appendChild( createFeaturesFragment( currenAd.offer.features) );
+    adElem.querySelector('.popup__features').appendChild( createFeaturesFragment( currentAd.offer.features) );
     adElem.querySelector('.popup__pictures').innerHTML = '';
-    adElem.querySelector('.popup__pictures').appendChild( createPhotosFragment( currenAd.offer.photos) );
+    adElem.querySelector('.popup__pictures').appendChild( createPhotosFragment( currentAd.offer.photos) );
+
+    // events
+    adElem.querySelector('.popup__close').addEventListener( 'click', onUserPopUpCloseClick );
 
     return adElem;
   };
@@ -87,32 +92,28 @@
 
   /**
   * Remove ads
+  * @param {Array} ads array of ads to remove from map
   **/
-  var removeAds = function(){
-    document.querySelectorAll( '.map__card').forEach(function(el){
-      el.remove();
+  var removeAds = function( ads ){
+    ads.forEach(function( ad ){
+      console.log( ad )
+      ad.remove();
     });
   };
 
   /**
     * Render ads
-    * @param {Array} adIdArray
+    * @param {Array} adIdArray ids' of ads that need to be rendered
   **/
   var renderAds = function( adIdArray ){
-
-    var mapElem = document.querySelector('.map');
-    var mapFilterElem = mapElem.querySelector('.map__filters-container');
-
     // create current ad element
     var adElem = createAdElem( window.mock_data.ads[adIdArray] ); //current ad
 
     // render popup to map
-    mapElem.insertBefore(adElem, mapFilterElem);
-
-    var popUpCloseElem = document.querySelector('.popup__close');
-    popUpCloseElem.addEventListener( 'click', onUserPopUpCloseClick );
+    window.elem.map.insertBefore( adElem, window.elem.mapFiltersFormContainer );
   };
 
+  // exports
   window.ads = {
     removeAds: removeAds,
     renderAds: renderAds

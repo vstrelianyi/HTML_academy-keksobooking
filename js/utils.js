@@ -44,6 +44,7 @@
     return 'img/avatars/user' + addZero(avatar) + '.png';
   };
 
+  // exports
   window.utils = {
     getRandomNum: getRandomNum,
     getRandomElements: getRandomElements,

@@ -57,7 +57,7 @@
   */
   var onUserPinClick = function( event ){
     // remove active state from all pins
-    window.pins.removePinActiveState();
+    window.pins.removePinActiveState( window.elem.pins );
 
     // add active state to clicked pin
     this.classList.add( 'map__pin--active' );
@@ -65,20 +65,23 @@
     // render ad for a pin
     var id = this.getAttribute( 'data-id' );
     if( id ){
-      window.ads.removeAds();
+      window.ads.removeAds( window.elem.ads );
       window.ads.renderAds( id );
     }
   };
 
-  var removePinActiveState = function(){
-    var mapPinElems = document.querySelectorAll('.map__pin');
-    mapPinElems.forEach( function( el ){
-      el.classList.remove( 'map__pin--active' );
+  /**
+    * Remove active state from pin
+    * @param {Array} ads array of pins to remove active state
+  */
+  var removePinActiveState = function( pins ){
+    pins.forEach( function( pin ){
+      pin.classList.remove( 'map__pin--active' );
     });
   };
 
   /**
-  * render pins to map
+    * render pins to map
   */
   var mapPinsElem = document.querySelector('.map__pins');
   var renderPins = function(){
@@ -87,6 +90,7 @@
     addPinEventListeners();
   };
 
+  // exports
   window.pins = {
     removePinActiveState: removePinActiveState,
     renderPins: renderPins
