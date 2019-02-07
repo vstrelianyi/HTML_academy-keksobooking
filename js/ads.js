@@ -96,7 +96,7 @@
   **/
   var removeAds = function( ads ){
     ads.forEach(function( ad ){
-      console.log( ad )
+      // console.log( ad );
       ad.remove();
     });
   };
